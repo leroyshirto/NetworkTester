@@ -2,14 +2,17 @@ from flask import Flask, request, jsonify
 import os
 from datetime import datetime
 import requests
+import config
+
 app = Flask(__name__)
 
-next_hop_url = os.environ.get('NEXT_HOP_URL', '')
-max_depth = int(os.environ.get('MAX_DEPTH', 1))
+current_depth = 1
 
 
 @app.route("/ping")
 def ping():
+    global current_depth
+
     next_hop_response = {}
     response = {
         'hostname': os.environ.get('HOSTNAME'),
@@ -18,9 +21,9 @@ def ping():
     }
     try:
         next_hop_response['request_start'] = datetime.utcnow()
-        if next_hop_url:
+        if config.NEXT_HOP_URL and current_depth < config.MAX_DEPTH:
             next_hop_response['last'] = False
-            hop_resp = requests.get(url='%s/ping' % next_hop_url)
+            hop_resp = requests.get(url='%s/ping' % config.NEXT_HOP_URL)
             next_hop_response['status_code'] = hop_resp.status_code
 
             if hop_resp.status_code is 200:
@@ -36,4 +39,4 @@ def ping():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
