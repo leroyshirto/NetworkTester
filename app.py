@@ -29,7 +29,7 @@ def ping():
             hop_resp = requests.get(url='%s/ping' % config.NEXT_HOP_URL)
             next_hop_response['status_code'] = hop_resp.status_code
 
-            if hop_resp.status_code is 200:
+            if hop_resp.status_code == 200:
                 next_hop_response['hop'] = hop_resp.json()
         else:
             next_hop_response['last'] = True
