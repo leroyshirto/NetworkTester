@@ -2,23 +2,23 @@ version: '2'
 services:
   network-tester-hop-1:
     build: .
-    image: leroyshirtofh/networktester
+    image: quay.io/leroyshirto/network-tester:latest
     environment:
       - NEXT_HOP_URL=http://network-tester-hop-2:5000
       - MAX_DEPTH=10
     ports:
       - '8080:5000'
   network-tester-hop-2:
-    image: leroyshirtofh/networktester
+    image: quay.io/leroyshirto/network-tester:latest
     environment:
       - NEXT_HOP_URL=http://network-tester-hop-3:5000
       - MAX_DEPTH=10
   network-tester-hop-3:
-    image: leroyshirtofh/networktester
+    image: quay.io/leroyshirto/network-tester:latest
     environment:
       - NEXT_HOP_URL=http://network-tester-hop-4:5000
       - MAX_DEPTH=10
   network-tester-hop-4:
-    image: leroyshirtofh/networktester
+    image: quay.io/leroyshirto/network-tester:latest
     environment:
       - MAX_DEPTH=10

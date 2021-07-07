@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: network-tester
+spec:
+  ports:
+    - name: ingress
+      protocol: TCP
+      port: 8080
+      targetPort: 5000
+  selector:
+    app: network-tester
+  type: ClusterIP
+  sessionAffinity: None

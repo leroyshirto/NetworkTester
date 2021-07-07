@@ -8,6 +8,9 @@ app = Flask(__name__)
 
 current_depth = 1
 
+@app.route("/")
+def home():
+    return "Use /ping endpoint to start"
 
 @app.route("/ping")
 def ping():
